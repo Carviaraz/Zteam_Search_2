@@ -166,10 +166,20 @@ public class CartController : Controller
     }
     public IActionResult SalesReport()
     {
-        // Retrieve sales report data from the database
-        var salesReports = _db.SalesReports.ToList(); // Example query
+        var customerId = HttpContext.Session.GetString("CusId");
+        if (customerId == null)
+        {
+            // Handle scenario where user is not logged in
+            // For example, redirect the user to the login page
+            return RedirectToAction("Login", "Home");
+        }
 
-        return View(salesReports); // Pass the sales report data to the view
+        var salesReports = _db.SalesReports
+            .Where(sr => sr.cusId == int.Parse(customerId))
+            .ToList();
+
+        return View(salesReports);
     }
+
 
 }
