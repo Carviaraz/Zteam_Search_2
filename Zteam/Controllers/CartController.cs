@@ -43,25 +43,43 @@ public class CartController : Controller
     [HttpPost]
     public async Task<IActionResult> AddToCart(int gameId)
     {
-        var game = await _db.Game.FindAsync(gameId);
-        if (game != null)
+        // Get the ID of the logged-in customer from the session
+        var customerId = HttpContext.Session.GetString("CusId");
+        if (customerId == null)
         {
-            var cartDetail = new CartDtl
-            {
-                GameId = game.GameId,
-                CdtlQty = 1, // Assuming you're adding one quantity of the game
-                CdtlPrice = game.Price, // Assuming game.Price is the price of the game
-                CdtlMoney = game.Price // Assuming game.Price is the price of the game
-            };
-
-            _db.CartDtls.Add(cartDetail);
-            await _db.SaveChangesAsync();
-
-            _gamesInCart.Add(game);
+            // Handle scenario where user is not logged in
+            // For example, redirect the user to the login page
+            return RedirectToAction("Login", "Home");
         }
-        return RedirectToAction("Index");
 
+        var existingCartItem = _db.CartDtls.FirstOrDefault(c => c.GameId == gameId && c.CusId == int.Parse(customerId));
+        if (existingCartItem != null)
+        {
+            existingCartItem.CdtlQty += 1; // Increment quantity if the game is already in the cart
+        }
+        else
+        {
+            var game = await _db.Game.FindAsync(gameId);
+            if (game != null)
+            {
+                var cartDetail = new CartDtl
+                {
+                    GameId = game.GameId,
+                    CdtlQty = 1, // Assuming you're adding one quantity of the game
+                    CdtlPrice = game.Price, // Assuming game.Price is the price of the game
+                    CdtlMoney = game.Price, // Assuming game.Price is the price of the game
+                    CusId = int.Parse(customerId) // Set the customer ID for the cart item
+                };
+
+                _db.CartDtls.Add(cartDetail);
+            }
+        }
+
+        await _db.SaveChangesAsync();
+
+        return RedirectToAction("Index");
     }
+
 
     // Action to remove a game from the cart
     public IActionResult RemoveFromCart(int gameId)

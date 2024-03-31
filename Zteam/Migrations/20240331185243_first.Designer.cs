@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Zteam.Data;
 
@@ -11,9 +12,11 @@ using Zteam.Data;
 namespace Zteam.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240331185243_first")]
+    partial class first
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -129,9 +132,6 @@ namespace Zteam.Migrations
 
                     b.Property<double?>("CdtlQty")
                         .HasColumnType("float");
-
-                    b.Property<int>("CusId")
-                        .HasColumnType("int");
 
                     b.Property<int>("GameId")
                         .HasColumnType("int");

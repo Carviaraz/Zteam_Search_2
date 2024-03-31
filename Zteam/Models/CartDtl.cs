@@ -14,6 +14,6 @@ namespace Zteam.Models
         public double? CdtlPrice { get; set; }
 
         public double? CdtlMoney { get; set; }
-
+        public int CusId { get; set; }
     }
 }

@@ -12,8 +12,8 @@ using Zteam.Data;
 namespace Zteam.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240331175904_first")]
-    partial class first
+    [Migration("20240331190826_AddCusIdToCartDtl")]
+    partial class AddCusIdToCartDtl
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -132,6 +132,9 @@ namespace Zteam.Migrations
 
                     b.Property<double?>("CdtlQty")
                         .HasColumnType("float");
+
+                    b.Property<int>("CusId")
+                        .HasColumnType("int");
 
                     b.Property<int>("GameId")
                         .HasColumnType("int");
