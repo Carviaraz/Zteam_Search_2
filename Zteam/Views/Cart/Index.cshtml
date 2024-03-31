@@ -1,8 +1,8 @@
-﻿@model IEnumerable<Zteam.ViewModels.CartVM>
+﻿@model Zteam.ViewModels.CartVM
 
 <h2>Shopping Cart</h2>
 
-@if (Model.Any())
+@if (Model.CartItems.Any())
 {
     <table class="table">
         <thead>
@@ -10,16 +10,18 @@
                 <th>Game Name</th>
                 <th>Quantity</th>
                 <th>Price</th>
+                <th>Total Price</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.CartItems)
             {
                 <tr>
-                    <td>@item.GameName</td>
+                    <td>@item.Game.GameName</td>
                     <td>@item.CdtlQty</td>
                     <td>@item.CdtlPrice</td>
+                    <td>@(item.CdtlQty * item.CdtlPrice)</td> <!-- Calculate total price for each item -->
                     <td>
                         <form asp-action="RemoveFromCart" asp-route-cartId="@item.CartId">
                             <button type="submit" class="btn btn-danger">Remove</button>
@@ -28,6 +30,13 @@
                 </tr>
             }
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3"></td>
+                <td>Total:</td>
+                <td>@Model.TotalCartPrice Baht</td> <!-- Display total cart price -->
+            </tr>
+        </tfoot>
     </table>
 }
 else

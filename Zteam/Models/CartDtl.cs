@@ -8,6 +8,7 @@ namespace Zteam.Models
         public int CartId { get; set; }
 
         public int GameId { get; set; }
+        public Game Game { get; set; }
 
         public double? CdtlQty { get; set; }
 

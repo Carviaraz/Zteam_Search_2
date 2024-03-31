@@ -21,21 +21,27 @@ public class CartController : Controller
     // Index action to display the contents of the cart
     public IActionResult Index()    
     {
-        var cartDetails = _db.CartDtls.ToList();
-        var gamesInCart = _db.Game.Where(g => cartDetails.Select(c => c.GameId).Contains(g.GameId)).ToList();
-
-        // Combine cart details with game information
-        var cartViewModel = cartDetails.Select(cd => new CartVM
+        var customerId = HttpContext.Session.GetString("CusId");
+        if (customerId == null)
         {
-            CartId = cd.CartId,
-            GameId = cd.GameId,
-            CdtlQty = cd.CdtlQty,
-            CdtlPrice = cd.CdtlPrice,
-            CdtlMoney = cd.CdtlMoney,
-            GameName = gamesInCart.FirstOrDefault(g => g.GameId == cd.GameId)?.GameName ?? "Unknown Game"
-        });
+            // Handle scenario where user is not logged in
+            // For example, redirect the user to the login page
+            return RedirectToAction("Login", "Home");
+        }
+
+        var cartItems = _db.CartDtls
+            .Include(c => c.Game) // Eager loading: Include the Game entity
+            .Where(c => c.CusId == int.Parse(customerId))
+            .ToList();
+
+        var cartViewModel = new CartVM
+        {
+            CartItems = cartItems, // Assign cart items to CartItems property
+            TotalCartPrice = cartItems.Sum(item => (item.CdtlQty ?? 0) * (item.CdtlPrice ?? 0))
+        };
 
         return View(cartViewModel);
+
 
     }
 
@@ -82,12 +88,13 @@ public class CartController : Controller
 
 
     // Action to remove a game from the cart
-    public IActionResult RemoveFromCart(int gameId)
+    public async Task<IActionResult> RemoveFromCart(int cartId)
     {
-        var gameToRemove = _gamesInCart.FirstOrDefault(g => g.GameId == gameId);
-        if (gameToRemove != null)
+        var cartItemToRemove = _db.CartDtls.FirstOrDefault(c => c.CartId == cartId);
+        if (cartItemToRemove != null)
         {
-            _gamesInCart.Remove(gameToRemove);
+            _db.CartDtls.Remove(cartItemToRemove);
+            await _db.SaveChangesAsync();
         }
         return RedirectToAction("Index");
     }
