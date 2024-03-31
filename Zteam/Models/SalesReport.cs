@@ -8,5 +8,6 @@
         public int QuantitySold { get; set; }
         public decimal TotalRevenue { get; set; }
         public decimal PlatformShare { get; set; }
+        public int cusId { get; internal set; }
     }
 }

@@ -37,6 +37,7 @@ public class CartController : Controller
         var cartViewModel = new CartVM
         {
             CartItems = cartItems, // Assign cart items to CartItems property
+            CusId = int.Parse(customerId),
             TotalCartPrice = cartItems.Sum(item => (item.CdtlQty ?? 0) * (item.CdtlPrice ?? 0))
         };
 
@@ -119,15 +120,15 @@ public class CartController : Controller
 
 
     [HttpPost]
-    public IActionResult BuyItems(int cartId)
+    public IActionResult BuyItems(int cusId)
     {
-        var cartItems = _db.CartDtls.Where(cd => cd.CartId == cartId).ToList();
+        var cartItems = _db.CartDtls.Where(cd => cd.CusId == cusId).ToList();
 
         foreach (var cartItem in cartItems)
         {
             // Process payment logic here (e.g., charging the user)
             // Once payment is successful, generate a sales report
-            GenerateSalesReport(cartItem);
+            GenerateSalesReport(cartItem, cusId);
         }
 
         // Optionally, clear the cart after successful purchase
@@ -137,19 +138,31 @@ public class CartController : Controller
         return RedirectToAction("Index", "Home"); // Redirect to a suitable page after purchase
     }
 
-    private void GenerateSalesReport(CartDtl cartItem)
+    private void GenerateSalesReport(CartDtl cartItem, int cusId)
     {
-        // Generate sales report for the purchased item
-        SalesReport salesReport = new SalesReport
+        // Explicitly load the related Game entity
+        _db.Entry(cartItem).Reference(cd => cd.Game).Load();
+
+        // Check if the Game property is not null before accessing its properties
+        if (cartItem.Game != null)
         {
-            PurchaseTime = DateTime.Now,
-            GameSold = cartItem.Game.GameName, // Assuming there's a navigation property to get the game name
-            QuantitySold = (int)cartItem.CdtlQty,
-            TotalRevenue = (decimal)cartItem.CdtlMoney,
-            PlatformShare = (decimal)(cartItem.CdtlMoney ?? 0.0) * 0.1m,
-            // Example: 10% platform share
-        };
-        _db.SalesReports.Add(salesReport);
+            // Generate sales report for the purchased item
+            SalesReport salesReport = new SalesReport
+            {
+                cusId = cusId, // Assuming you have a CustomerId property in the SalesReport model
+                PurchaseTime = DateTime.Now,
+                GameSold = cartItem.Game.GameName,
+                QuantitySold = (int)(cartItem.CdtlQty ?? 0), // Handle null quantity
+                TotalRevenue = (decimal)(cartItem.CdtlMoney ?? 0), // Handle null money
+                PlatformShare = (decimal)(cartItem.CdtlMoney ?? 0) * 0.1m,
+            };
+            _db.SalesReports.Add(salesReport);
+        }
+        else
+        {
+            // Handle case where Game property is null (optional)
+            // Log or handle the situation accordingly
+        }
     }
     public IActionResult SalesReport()
     {

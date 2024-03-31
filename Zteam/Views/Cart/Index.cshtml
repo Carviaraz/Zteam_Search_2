@@ -39,7 +39,8 @@
         </tfoot>
     </table>
 
-    <form asp-action="BuyItems" asp-route-cartId="@Model.CartId">
+    <form asp-action="BuyItems" asp-route-cartId="@Model.CartId" method="post">
+        <input type="hidden" name="cusId" value="@Model.CusId" /> <!-- Add a hidden input field for cusId -->
         <button type="submit" class="btn btn-primary">Buy Items</button>
     </form>
 }

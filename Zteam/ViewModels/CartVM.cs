@@ -16,5 +16,7 @@ namespace Zteam.ViewModels
 
         // Total price of all items in the cart
         public double TotalCartPrice { get; set; }
+        public int CusId { get; set; }
+
     }
 }
