@@ -109,4 +109,54 @@ public class CartController : Controller
         }
         base.Dispose(disposing);
     }
+
+
+
+
+
+
+
+
+
+    [HttpPost]
+    public IActionResult BuyItems(int cartId)
+    {
+        var cartItems = _db.CartDtls.Where(cd => cd.CartId == cartId).ToList();
+
+        foreach (var cartItem in cartItems)
+        {
+            // Process payment logic here (e.g., charging the user)
+            // Once payment is successful, generate a sales report
+            GenerateSalesReport(cartItem);
+        }
+
+        // Optionally, clear the cart after successful purchase
+        _db.CartDtls.RemoveRange(cartItems);
+        _db.SaveChanges();
+
+        return RedirectToAction("Index", "Home"); // Redirect to a suitable page after purchase
+    }
+
+    private void GenerateSalesReport(CartDtl cartItem)
+    {
+        // Generate sales report for the purchased item
+        SalesReport salesReport = new SalesReport
+        {
+            PurchaseTime = DateTime.Now,
+            GameSold = cartItem.Game.GameName, // Assuming there's a navigation property to get the game name
+            QuantitySold = (int)cartItem.CdtlQty,
+            TotalRevenue = (decimal)cartItem.CdtlMoney,
+            PlatformShare = (decimal)(cartItem.CdtlMoney ?? 0.0) * 0.1m,
+            // Example: 10% platform share
+        };
+        _db.SalesReports.Add(salesReport);
+    }
+    public IActionResult SalesReport()
+    {
+        // Retrieve sales report data from the database
+        var salesReports = _db.SalesReports.ToList(); // Example query
+
+        return View(salesReports); // Pass the sales report data to the view
+    }
+
 }

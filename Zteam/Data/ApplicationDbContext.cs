@@ -20,6 +20,8 @@ namespace Zteam.Data
         public DbSet<Duty> Duty { get; set; }
         public DbSet<Staff> Staff { get; set; }
         public object CartDtl { get; internal set; }
+        public DbSet<SalesReport> SalesReports { get; set; }
+
     }
 
 }

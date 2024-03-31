@@ -38,6 +38,10 @@
             </tr>
         </tfoot>
     </table>
+
+    <form asp-action="BuyItems" asp-route-cartId="@Model.CartId">
+        <button type="submit" class="btn btn-primary">Buy Items</button>
+    </form>
 }
 else
 {
