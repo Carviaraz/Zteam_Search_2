@@ -1,6 +1,16 @@
 ﻿@using Microsoft.AspNetCore.Http;
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
 
+@{
+    //ย้ายตัวแปร Session ที่ประกาศกระจายไว้ มารวมกันที่เดียว
+    var CartId = HttpContextAccessor.HttpContext.Session.GetString("CartId");
+    var CartMoney = HttpContextAccessor.HttpContext.Session.GetString("CartMoney");
+    var CartQty = HttpContextAccessor.HttpContext.Session.GetString("CartQty");
+    var CusId = HttpContextAccessor.HttpContext.Session.GetString("CusId");
+    var CusName = HttpContextAccessor.HttpContext.Session.GetString("CusName");
+
+    var StfId = HttpContextAccessor.HttpContext.Session.GetString("StfId");
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,83 +34,133 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarColor01">
-
-
-
-
-
-
-
-
-
-
-
-
-                    @if (HttpContextAccessor.HttpContext.Session.GetString("CusId") == null)
-                    {
-                        <ul class="navbar-nav me-auto">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="/Home/Index">
-                                    หน้าแรก
-                                    <span class="visually-hidden">(current)</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Library/AllGame">เกมทั้งหมด</a>
-                            </li>
-                        </ul>
-                        <form class="d-flex m-2 me-3" action="@Url.Action("Search", "Library")" method="post">
-                            <input class="form-control me-sm-2" type="search" name="query" placeholder="ค้นหา">
-                            <button class="btn btn-secondary my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
+                    <ul class="navbar-nav flex-grow-1">
+                        @if (StfId == null)
+                        {
+                            <ul class="navbar-nav me-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="/Home/Index">
+                                        หน้าแรก
+                                        <span class="visually-hidden">(current)</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Library/AllGame">เกมทั้งหมด</a>
+                                </li>
+                            </ul>
+                            @* <form class="d-flex m-2 me-3" action="@Url.Action("Search", "Library")" method="post">
+                        <input class="form-control me-sm-2" type="search" name="query" placeholder="ค้นหา">
+                        <button class="btn btn-secondary my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
                         </form>
                         <a class="nav-link active me-2" href="/Cart/index">
-                            <button class="btn btn-info"> <i class="bi bi-cart-plus"></i> </button>
+                        <button class="btn btn-info"> <i class="bi bi-cart-plus"></i> </button>
                         </a>
                         <ul class="navbar-nav m-2">
-                            <li class="nav-item">
-                                <a class="btn btn-outline-success" href="/Home/Login">Login</a>
-                            </li>
+                        <li class="nav-item">
+                        <a class="btn btn-outline-success" href="/Home/Login">Login</a>
+                        </li>
                         </ul>
 
                         <ul class="navbar-nav m-2">
-                            <li class="nav-item">
-                                <a class="btn btn-outline-danger" href="/Home/Register">Sign Up</a>
-                            </li>
-                        </ul>
-                    }
-                    else
-                    {
-                        <ul class="navbar-nav me-auto">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="/Home/Index">
-                                    หน้าแรก
-                                    <span class="visually-hidden">(current)</span>
+                        <li class="nav-item">
+                        <a class="btn btn-outline-danger" href="/Home/Register">Sign Up</a>
+                        </li>
+                        </ul> *@
+                        }
+                        else
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    จัดการระบบ
                                 </a>
+                                <ul class="dropdown-menu bg-light">
+                                    <li><a class="dropdown-item" asp-controller="Product" asp-action="Index">ข้อมูลสินค้า</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Buying" asp-action="Index">ซื้อสินค้าเข้า</a></li>
+                                    <li><a class="dropdown-item">กำหนดUser</a></li>
+                                </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Library/AllGame">เกมทั้งหมด</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button"
+                                   data-bs-toggle="dropdown" aria-expanded="false">
+                                    รายงาน
+                                </a>
+                                <ul class="dropdown-menu bg-light">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Report" asp-action="SaleDaily">
+                                            สินค้าขายรายวัน
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Report" asp-action="SaleMonthly">
+                                            สินค้าขายรายเดือน
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item">พนักงานทำงานรายวัน</a></li>
+                                    <li><a class="dropdown-item">สรุปพนักงานทำงานรายเดือน</a></li>
+                                </ul>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Cart/SalesReport">Sales Report</a>
-                            </li>
+                            @*  <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                        <a class="nav-link active" href="/Home/Index">
+                        หน้าแรก
+                        <span class="visually-hidden">(current)</span>
+                        </a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link" href="/Library/AllGame">เกมทั้งหมด</a>
+                        </li>
                         </ul>
                         <form class="d-flex m-2 me-3" action="@Url.Action("Search", "Library")" method="post">
-                            <input class="form-control me-sm-2" type="search" name="query" placeholder="ค้นหา">
-                            <button class="btn btn-secondary my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
+                        <input class="form-control me-sm-2" type="search" name="query" placeholder="ค้นหา">
+                        <button class="btn btn-secondary my-2 my-sm-0" type="submit"><i class="bi bi-search"></i></button>
                         </form>
                         <a class="nav-link active me-2" href="/Cart/index">
-                            <button class="btn btn-info"> <i class="bi bi-cart-plus"></i> </button>
+                        <button class="btn btn-info"> <i class="bi bi-cart-plus"></i> </button>
                         </a>
                         <img src="/assests/image/blank_profile.png" alt="..." overflow: hidden; margin-left: 30px;" width="50" height="50">
                         <ul class="navbar-nav m-2">
-                            <li class="nav-item">
-                                <a class="btn btn-outline-danger" href="/Home/Logout">Log out</a>
-                            </li>
-                        </ul>
+                        <li class="nav-item">
+                        <a class="btn btn-outline-danger" href="/Home/Logout">Log out</a>
+                        </li>
+                        </ul> *@
+                        }
+                    </ul>
+                </div>
+                <div class="text-end pe-3">
+                    @if (@HttpContextAccessor.HttpContext.Session.GetString("CusId") != null)
+                    {
+
+                        <a class="btn btn-success text-white mx-2"
+                           asp-controller="Customer" asp-action="Show" asp-route-id="@CusId">
+                            @CusName
+                        </a>
+                        <a class="btn btn-danger text-white ms-2"
+                           asp-controller="home" asp-action="Logout"
+                           onclick="return confirm('ออกจากระบบ?')">
+                            Logout
+                        </a>
                     }
+                    else
+                    {
+                        if (StfId == null)
+                        {
+                            <ul class="navbar-nav m-2">
+                                <li class="nav-item">
+                                    <a class="btn btn-outline-success me-2" href="/Home/Login">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="btn btn-outline-danger me-2" href="/Home/Register">Sign Up</a>
+                                </li>
 
-
-
+                            </ul>
+                        }
+                        else
+                        {
+                            <a class="btn btn-outline-danger" href="/Home/Logout">Log out</a>
+                        }
+                    }
                 </div>
 
         </nav>
