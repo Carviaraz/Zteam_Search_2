@@ -50,38 +50,40 @@ namespace Zteam.Controllers
         }
 
         [HttpPost]
-        
-        public async Task<IActionResult> Login(LoginViewModel model)
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(string userName, string userPass)
         {
-            if (ModelState.IsValid)
+            var cus = from c in _db.Customer
+                      where c.CusName.Equals(userName)
+                      && c.CusPass.Equals(userPass)
+                      select c;
+
+            if (cus.ToList().Count() == 0)
             {
-                var user = await _db.Customer.FirstOrDefaultAsync(c => c.CusName == model.Username && c.CusPass == model.Password);
-
-                if (user != null)
-                {
-                    // Authentication successful, create authentication cookie or JWT token
-                    var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.CusName)
-                    // Add more claims as needed
-                };
-
-                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                    var principal = new ClaimsPrincipal(identity);
-
-                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-                    // Redirect to a protected resource or home page
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid username or password.");
-                }
+                TempData["ErrorMessage"] = "หาข้อมูลไม่พบ";
+                return RedirectToAction("Index");
             }
 
-            // If ModelState is not valid or authentication fails, redisplay the login form with validation errors
-            return View(model);
+            int CusId;
+            string CusName;
+
+            foreach (var item in cus)
+            {
+                CusId = item.CusId;
+                CusName = item.CusName;
+
+                HttpContext.Session.SetString("CusId", CusId.ToString());
+                HttpContext.Session.SetString("CusName", CusName);
+
+                var theRecord = _db.Customer.Find(CusId);
+                theRecord.LastLogin = DateOnly.FromDateTime(DateTime.Now);
+
+                _db.Entry(theRecord).State = EntityState.Modified;
+            }
+
+            _db.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
 
         }
         public IActionResult Logout()

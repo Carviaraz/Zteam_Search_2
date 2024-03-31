@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -42,18 +45,24 @@
                     </a>
                     
 
+                    @if (HttpContextAccessor.HttpContext.Session.GetString("CusId") == null)
+                    {
+                        <ul class="navbar-nav m-2">
+                            <li class="nav-item">
+                                <a class="btn btn-outline-success" href="/Home/Login">Login</a>
+                            </li>
+                        </ul>
 
-                    <ul class="navbar-nav m-2">
-                        <li class="nav-item">
-                            <a class="btn btn-outline-success" href="/Home/Login">Login</a>
-                        </li>
-                    </ul>
-
-                    <ul class="navbar-nav m-2">
-                        <li class="nav-item">
-                            <a class="btn btn-outline-danger" href="/Home/Register">Sign Up</a>
-                        </li>
-                    </ul>
+                        <ul class="navbar-nav m-2">
+                            <li class="nav-item">
+                                <a class="btn btn-outline-danger" href="/Home/Register">Sign Up</a>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <h5>@HttpContextAccessor.HttpContext.Session.GetString("CusName")</h5>
+                    }
 
                     
 

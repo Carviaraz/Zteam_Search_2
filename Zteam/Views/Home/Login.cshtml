@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Http;
+﻿@model Zteam.ViewModels.LoginViewModel
+@using Microsoft.AspNetCore.Http;
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
 
 <div class="container">
@@ -7,7 +8,7 @@
         <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
     }
 
-    @if (HttpContextAccessor.HttpContext.Session.GetString("CusId") == null)
+    @if (HttpContextAccessor.HttpContext.Session.GetString("CusName") == null)
     {
         <div class="text-center">
             <div class="display-4">Zteam</div>
