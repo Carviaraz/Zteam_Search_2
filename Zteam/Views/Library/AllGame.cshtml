@@ -1,0 +1,43 @@
+﻿@{
+}
+
+@model IEnumerable<Zteam.Models.Game>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No data available.</p>
+}
+else
+{
+    <div class="container">
+        <h3>เกมทั้งหมด</h3>
+        <div class="row">
+            @foreach (var game in Model)
+            {
+                <div class="col-md-4 ">
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <img src="https://picsum.photos/20/10" class="card-img" alt="Image">
+                            <h3 class="card-title">
+                                <!-- Link to game detail page -->
+                                <a href="@Url.Action("GameDetail", "Library", new { id = game.GameId })">@game.GameName</a>
+                            </h3>
+
+                            <p class="card-text">@game.GameInfo</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <div class="btn-group">
+                                    <!-- You can add buttons or other actions here -->
+                                </div>
+
+                                <button type="button" class="btn btn-success"><i class="bi bi-cart-plus"></i> </button>
+
+                                <!-- <small class="text-muted">ID: @game.GameId</small> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+    </div>
+}

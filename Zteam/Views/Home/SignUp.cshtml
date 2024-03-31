@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Http;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+
+
+
+<div class="container">
+    <div class="text-center">
+        <div class="display-4">Zteam</div>
+
+        <form asp-controller="Home" asp-action="register" method="post">
+            <div class="row justify-content-center m-3">
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <div class="input-group-text"><i class="bi bi-person-circle"></i></div>
+                        <input type="text" placeholder="UserName" name="userName" class="form-control" required />
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center m-3">
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <div class="input-group-text"><i class="bi bi-envelope-fill"></i></div>
+                        <input type="email" placeholder="Email" name="userEmail" class="form-control" required />
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center m-3">
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <div class="input-group-text"><i class="bi bi-unlock-fill"></i></div>
+                        <input type="password" placeholder="Password" name="userPass" class="form-control" required />
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center m-3">
+                <div class="col-lg-2">
+                    <button type="submit" class="btn btn-primary">ลงทะเบียน</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

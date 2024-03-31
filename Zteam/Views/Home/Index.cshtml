@@ -1,0 +1,161 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<style>
+    .custom-carousel-container {
+        margin-left: 20px; /* Adjust as needed */
+        margin-right: 20px; /* Adjust as needed */
+    }
+
+    .custom-button {
+        background-color: #808080; /* Replace with your desired color */
+        border-color: #808080; /* Replace with your desired color */
+    }
+
+    .scrollable-cards-container {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 20px; /* Add some bottom padding to avoid horizontal scrollbar being cut off */
+    }
+
+    .scrollable-card {
+        display: inline-block;
+        width: 200px; /* Adjust card width as needed */
+        margin-right: 10px; /* Adjust card margin as needed */
+    }
+</style>
+
+
+@* slide img *@
+<div class="home-page-content">
+
+<div class="container custom-carousel-container my-5">
+        <p class="home-page-content-title">โดดเด่นและแนะนำ</p>
+    <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active btn btn-primary" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="btn btn-primary" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="btn btn-primary" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://picsum.photos/300/125" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://picsum.photos/300/125" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="https://picsum.photos/300/125" class="d-block w-100" alt="...">
+            </div>
+        </div>
+        <button class="carousel-control-prev custom-button" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next custom-button" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+</div>
+
+
+<div class="container">
+    <h2>เกมขายดี</h2>
+    <div class="scrollable-cards-container">
+        <div class="scrollable-card">
+            <div class="card">
+                <img src="https://via.placeholder.com/200x200" class="card-img-top" alt="Card Image">
+                <div class="card-body">
+                    <h5 class="card-title">Card 1</h5>
+                    <p class="card-text">This is a sample card.</p>
+                </div>
+            </div>
+        </div>
+        <div class="scrollable-card">
+            <div class="card">
+                <img src="https://via.placeholder.com/200x200" class="card-img-top" alt="Card Image">
+                <div class="card-body">
+                    <h5 class="card-title">Card 2</h5>
+                    <p class="card-text">This is another sample card.</p>
+                </div>
+            </div>
+        </div><div class="scrollable-card">
+            <div class="card">
+                <img src="https://via.placeholder.com/200x200" class="card-img-top" alt="Card Image">
+                <div class="card-body">
+                    <h5 class="card-title">Card 2</h5>
+                    <p class="card-text">This is another sample card.</p>
+                </div>
+            </div>
+        </div><div class="scrollable-card">
+            <div class="card">
+                <img src="https://via.placeholder.com/200x200" class="card-img-top" alt="Card Image">
+                <div class="card-body">
+                    <h5 class="card-title">Card 2</h5>
+                    <p class="card-text">This is another sample card.</p>
+                </div>
+            </div>
+        </div><div class="scrollable-card">
+            <div class="card">
+                <img src="https://via.placeholder.com/200x200" class="card-img-top" alt="Card Image">
+                <div class="card-body">
+                    <h5 class="card-title">Card 2</h5>
+                    <p class="card-text">This is another sample card.</p>
+                </div>
+            </div>
+        </div><div class="scrollable-card">
+            <div class="card">
+                <img src="https://via.placeholder.com/200x200" class="card-img-top" alt="Card Image">
+                <div class="card-body">
+                    <h5 class="card-title">Card 2</h5>
+                    <p class="card-text">This is another sample card.</p>
+                </div>
+            </div>
+        </div><div class="scrollable-card">
+            <div class="card">
+                <img src="https://via.placeholder.com/200x200" class="card-img-top" alt="Card Image">
+                <div class="card-body">
+                    <h5 class="card-title">Card 2</h5>
+                    <p class="card-text">This is another sample card.</p>
+                </div>
+            </div>
+        </div><div class="scrollable-card">
+            <div class="card">
+                <img src="https://via.placeholder.com/200x200" class="card-img-top" alt="Card Image">
+                <div class="card-body">
+                    <h5 class="card-title">Card 2</h5>
+                    <p class="card-text">This is another sample card.</p>
+                </div>
+            </div>
+        </div><div class="scrollable-card">
+            <div class="card">
+                <img src="https://via.placeholder.com/200x200" class="card-img-top" alt="Card Image">
+                <div class="card-body">
+                    <h5 class="card-title">Card 2</h5>
+                    <p class="card-text">This is another sample card.</p>
+                </div>
+            </div>
+        </div><div class="scrollable-card">
+            <div class="card">
+                <img src="https://via.placeholder.com/200x200" class="card-img-top" alt="Card Image">
+                <div class="card-body">
+                    <h5 class="card-title">Card 2</h5>
+                    <p class="card-text">This is another sample card.</p>
+                </div>
+            </div>
+        </div><div class="scrollable-card">
+            <div class="card">
+                <img src="https://via.placeholder.com/200x200" class="card-img-top" alt="Card Image">
+                <div class="card-body">
+                    <h5 class="card-title">Card 2</h5>
+                    <p class="card-text">This is another sample card.</p>
+                </div>
+            </div>
+        </div>
+        <!-- Add more cards as needed -->
+    </div>
+</div>
