@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Zteam.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class first : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -78,9 +78,9 @@ namespace Zteam.Migrations
                 name: "Customer",
                 columns: table => new
                 {
-                    CusId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CusId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     CusName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CusLogin = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CusPass = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CusEmail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CusAdd = table.Column<string>(type: "nvarchar(max)", nullable: true),

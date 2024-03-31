@@ -138,17 +138,16 @@ namespace Zteam.Migrations
 
             modelBuilder.Entity("Zteam.Models.Customer", b =>
                 {
-                    b.Property<string>("CusId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CusId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CusId"));
 
                     b.Property<string>("CusAdd")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CusEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CusLogin")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

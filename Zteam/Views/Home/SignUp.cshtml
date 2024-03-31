@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Http;
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+@model Customer
 
 
 
@@ -7,28 +8,33 @@
     <div class="text-center">
         <div class="display-4">Zteam</div>
 
-        <form asp-controller="Home" asp-action="register" method="post">
+        <form asp-controller="Home" asp-action="SignUp" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="row justify-content-center m-3">
                 <div class="col-lg-4">
-                    <div class="input-group">
-                        <div class="input-group-text"><i class="bi bi-person-circle"></i></div>
-                        <input type="text" placeholder="UserName" name="userName" class="form-control" required />
+                    <div class="form-group">
+                        <label asp-for="CusName"></label>
+                        <input asp-for="CusName" class="form-control" />
+                        <span asp-validation-for="CusName" class="text-danger"></span>
                     </div>
                 </div>
             </div>
             <div class="row justify-content-center m-3">
                 <div class="col-lg-4">
-                    <div class="input-group">
-                        <div class="input-group-text"><i class="bi bi-envelope-fill"></i></div>
-                        <input type="email" placeholder="Email" name="userEmail" class="form-control" required />
+                    <div class="form-group">
+                        <label asp-for="CusPass"></label>
+                        <input asp-for="CusPass" class="form-control" />
+                        <span asp-validation-for="CusPass" class="text-danger"></span>
                     </div>
                 </div>
             </div>
             <div class="row justify-content-center m-3">
                 <div class="col-lg-4">
-                    <div class="input-group">
-                        <div class="input-group-text"><i class="bi bi-unlock-fill"></i></div>
-                        <input type="password" placeholder="Password" name="userPass" class="form-control" required />
+                    <div class="form-group">
+                        <label asp-for="CusEmail"></label>
+                        <input asp-for="CusEmail" class="form-control" />
+                        <span asp-validation-for="CusEmail" class="text-danger"></span>
                     </div>
                 </div>
             </div>
