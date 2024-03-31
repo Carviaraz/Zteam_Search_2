@@ -115,8 +115,11 @@ namespace Zteam.Migrations
 
             modelBuilder.Entity("Zteam.Models.CartDtl", b =>
                 {
-                    b.Property<string>("CartId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"));
 
                     b.Property<double?>("CdtlMoney")
                         .HasColumnType("float");
@@ -127,9 +130,8 @@ namespace Zteam.Migrations
                     b.Property<double?>("CdtlQty")
                         .HasColumnType("float");
 
-                    b.Property<string>("GameId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("GameId")
+                        .HasColumnType("int");
 
                     b.HasKey("CartId");
 

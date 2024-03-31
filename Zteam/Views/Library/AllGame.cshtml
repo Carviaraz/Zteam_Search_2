@@ -29,7 +29,13 @@ else
                                     <!-- You can add buttons or other actions here -->
                                 </div>
 
-                                <button type="button" class="btn btn-success"><i class="bi bi-cart-plus"></i> </button>
+                                <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                                    <input type="hidden" name="gameId" value="@game.GameId" />
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="bi bi-cart-plus"></i> Add to Cart
+                                    </button>
+                                </form>
+
 
                                 <!-- <small class="text-muted">ID: @game.GameId</small> -->
                             </div>

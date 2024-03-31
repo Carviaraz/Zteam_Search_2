@@ -63,8 +63,9 @@ namespace Zteam.Migrations
                 name: "CartDtls",
                 columns: table => new
                 {
-                    CartId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    GameId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CartId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GameId = table.Column<int>(type: "int", nullable: false),
                     CdtlQty = table.Column<double>(type: "float", nullable: true),
                     CdtlPrice = table.Column<double>(type: "float", nullable: true),
                     CdtlMoney = table.Column<double>(type: "float", nullable: true)
