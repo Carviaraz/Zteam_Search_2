@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Game>
+
+<h2>Shopping Cart</h2>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Game Name</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in Model)
+            {
+                <tr>
+                    <td>@game.GameName</td>
+                    <td>@game.Price.ToString("C")</td>
+                    <td>
+                        <form asp-action="RemoveFromCart" asp-route-gameId="@game.GameId">
+                            <button type="submit" class="btn btn-danger">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Your cart is empty.</p>
+}
